@@ -5,9 +5,9 @@ import (
 
 	"encoding/json"
 
+	"math/rand"
 	"net/http"
-	// "math/rand"
-	// "strconv"
+	"strconv"
 )
 
 type Author struct {
@@ -48,6 +48,9 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var book Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
+	book.Id = strconv.Itoa(rand.Intn(10000))
+	books = append(books, book)
+	json.NewEncoder(w).Encode(book)
 }
 
 // update book
